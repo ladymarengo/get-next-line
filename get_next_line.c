@@ -57,21 +57,22 @@ int	create_line(char **saved, char **line, int state)
 	{
 		if (state == 1)
 			return (0);
-		else
-		{
-			*line = ft_strdup(*saved);
-			ft_strdel(saved);
-			if (!line)
-				return (-1);
-			return (1);
-		}
+		*line = ft_strdup(*saved);
+		ft_strdel(saved);
+		if (!line)
+			return (-1);
+		return (1);
 	}
 	*line = ft_strsub(*saved, 0, find_newline(*saved));
 	temp = ft_strsub(*saved, find_newline(*saved) + 1, ft_strlen(*saved));
 	free(*saved);
 	*saved = temp;
 	if (!line || !saved)
+	{
+		if (!line)
+			free(*saved);
 		return (-1);
+	}
 	return (1);
 }
 
