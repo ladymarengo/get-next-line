@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:31:04 by nsamoilo          #+#    #+#             */
-/*   Updated: 2021/11/26 20:26:01 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2021/12/06 15:47:34 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	save_buffer(char **saved, char *buffer)
 	else
 	{
 		temp = ft_strjoin(*saved, buffer);
-		if (!temp)
-			return (-1);
 		free(*saved);
+		if (!temp)
+			return (-1);	
 		*saved = temp;
 	}
 	return (1);

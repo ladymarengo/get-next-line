@@ -6,7 +6,7 @@
 #    By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/08 14:28:06 by nsamoilo          #+#    #+#              #
-#    Updated: 2021/11/29 11:02:39 by nsamoilo         ###   ########.fr        #
+#    Updated: 2021/11/26 11:35:56 by nsamoilo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,3 +39,8 @@ fclean: clean
 	rm -rf $(NAME)
 
 re: fclean all
+
+test:
+	@for function in $(FUNCTIONS) ; do \
+		./eval_tests/tests.sh $$function ; \
+	done
