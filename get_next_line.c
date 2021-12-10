@@ -6,7 +6,7 @@
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:31:04 by nsamoilo          #+#    #+#             */
-/*   Updated: 2021/12/06 16:03:15 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2021/12/08 17:50:39 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	find_newline(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (-1);
 	while (str[i])
 	{
 		if (str[i] == '\n')
@@ -84,9 +86,12 @@ int	read_fd(const int fd, char **saved)
 
 	buffer = ft_strnew(BUFF_SIZE + 1);
 	bytes = read(fd, buffer, BUFF_SIZE);
-	if (bytes == -1)
+	if (!buffer || bytes == -1)
 	{
-		free(buffer);
+		if (buffer)
+			free(buffer);
+		if (*saved)
+			free(*saved);
 		return (-1);
 	}
 	buffer[bytes] = '\0';
@@ -107,13 +112,11 @@ int	get_next_line(const int fd, char **line)
 	int			created;
 
 	created = 0;
-	if (BUFF_SIZE <= 0 || fd < 0 || line == NULL)
+	state = 1;
+	if (BUFF_SIZE <= 0 || fd < 0 || fd > MAX_FD || line == NULL)
 		return (-1);
 	while (created == 0)
 	{
-		state = read_fd(fd, &(saved[fd]));
-		if (state == -1)
-			return (-1);
 		created = create_line(&(saved[fd]), line, state);
 		if (created == 2)
 		{
@@ -123,6 +126,9 @@ int	get_next_line(const int fd, char **line)
 		}
 		else if (created == -1 || created == 1)
 			return (created);
+		state = read_fd(fd, &(saved[fd]));
+		if (state == -1)
+			return (-1);
 	}
 	return (1);
 }
