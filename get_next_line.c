@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_new.c                                :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nsamoilo <nsamoilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:31:04 by nsamoilo          #+#    #+#             */
-/*   Updated: 2021/12/08 17:50:39 by nsamoilo         ###   ########.fr       */
+/*   Updated: 2022/01/11 18:27:58 by nsamoilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	save_buffer(char **saved, char *buffer)
 {
 	char	*temp;
 
-	if (!(*saved) || ft_strlen(*saved) == 0)
+	if (!(*saved))
 	{
 		*saved = ft_strdup(buffer);
 		if (!(*saved))
@@ -84,7 +84,7 @@ int	read_fd(const int fd, char **saved)
 	int		bytes;
 	int		result;
 
-	buffer = ft_strnew(BUFF_SIZE + 1);
+	buffer = ft_strnew(BUFF_SIZE);
 	bytes = read(fd, buffer, BUFF_SIZE);
 	if (!buffer || bytes == -1)
 	{
@@ -94,7 +94,7 @@ int	read_fd(const int fd, char **saved)
 			free(*saved);
 		return (-1);
 	}
-	buffer[bytes] = '\0';
+	// buffer[bytes] = '\0';
 	result = save_buffer(saved, buffer);
 	free(buffer);
 	if (result == -1)

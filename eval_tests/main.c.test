@@ -19,6 +19,7 @@ void test1(char *argv)
 		ft_strdel(&line);
 	}
 	printf("%d\n", get_next_line(fd1, &line));
+	ft_strdel(&line);
 	close(fd1);
 }
 
